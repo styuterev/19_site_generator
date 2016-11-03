@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-3">
+        {% for topic in topics %}
+            <button class="accordion"> {{ topics[topic] }} </button>
+            <div class="panel">
+            <ul class="nav nav-tabs nav-stacked">
+            {% for article in articles[topic] %}
+                <li> <a data-toggle="tab" href="#{{ generate_id(article.source) }}">
+                    {{ article.title }} </a>
+                </li>
+            {% endfor %}
+            </ul>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="col-sm-9">
+        <div class="tab-content">
+            {% for topic in topics %}
+                {% for article in articles[topic] %}
+                    <div id="{{ generate_id(article.source) }}" class="tab-pane fade">
+                        {{ load_article(article.source) }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].onclick = function(){
+        this.classList.toggle("active");
+        this.nextElementSibling.classList.toggle("show");
+    }
+}
+</script>
+
+{% endblock %}
