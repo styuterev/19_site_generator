@@ -2,24 +2,31 @@
 {% block content %}
 <div class="row">
     <div class="col-sm-3">
-        {% for topic in topics %}
-            <button class="accordion"> {{ topics[topic] }} </button>
-            <div class="panel">
-            <ul class="nav nav-tabs nav-stacked">
-            {% for article in articles[topic] %}
-                <li> <a data-toggle="tab" href="#{{ generate_id(article.source) }}">
-                    {{ article.title }} </a>
-                </li>
+        <div class="container-fluid">
+            {% for topic in topics %}
+                <div>
+                    <button class="btn btn-default btn-index" data-toggle="collapse"
+                            data-target="#{{ generate_id('button', topic) }}">
+                        {{ topics[topic] }}
+                    </button>
+                </div>
+                <div class="collapse" id="{{ generate_id('button', topic) }}">
+                    {% for article in articles[topic] %}
+                        <div>
+                            <button class="btn btn-default btn-article" id="{{ generate_id('button', article.source) }}">
+                                {{ article.title }}
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
             {% endfor %}
-            </ul>
-            </div>
-        {% endfor %}
+        </div>
     </div>
     <div class="col-sm-9">
-        <div class="tab-content">
+        <div class="container-fluid" id="articles">
             {% for topic in topics %}
                 {% for article in articles[topic] %}
-                    <div id="{{ generate_id(article.source) }}" class="tab-pane fade">
+                    <div id="{{ generate_id('div', article.source) }}">
                         {{ load_article(article.source) }}
                     </div>
                 {% endfor %}
@@ -29,15 +36,13 @@
 </div>
 
 <script>
-var acc = document.getElementsByClassName("accordion");
-var i;
-
-for (i = 0; i < acc.length; i++) {
-    acc[i].onclick = function(){
-        this.classList.toggle("active");
-        this.nextElementSibling.classList.toggle("show");
-    }
-}
+{% for topic in topics %}
+    {% for article in articles[topic] %}
+        $("#{{ generate_id('button', article.source) }}").click(function() {
+            $("#articles").children().hide();
+            $("#{{ generate_id('div', article.source) }}").show();
+        });
+    {% endfor %}
+{% endfor %}
 </script>
-
 {% endblock %}
