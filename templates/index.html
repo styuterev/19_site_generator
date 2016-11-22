@@ -6,14 +6,14 @@
             {% for topic in topics %}
                 <div>
                     <button class="btn btn-default btn-index" data-toggle="collapse"
-                            data-target="#{{ generate_id('button', topic) }}">
+                            data-target=".{{ generate_name(topic) }}">
                         {{ topics[topic] }}
                     </button>
                 </div>
-                <div class="collapse" id="{{ generate_id('button', topic) }}">
+                <div class="collapse {{ generate_name(topic) }}">
                     {% for article in articles[topic] %}
                         <div>
-                            <button class="btn btn-default btn-article" id="{{ generate_id('button', article.source) }}">
+                            <button class="btn btn-default btn-article" id="{{ generate_name(article.source) }}">
                                 {{ article.title }}
                             </button>
                         </div>
@@ -26,7 +26,7 @@
         <div class="container-fluid" id="articles">
             {% for topic in topics %}
                 {% for article in articles[topic] %}
-                    <div id="{{ generate_id('div', article.source) }}">
+                    <div class="{{ generate_name(article.source) }}">
                         {{ load_article(article.source) }}
                     </div>
                 {% endfor %}
@@ -34,15 +34,4 @@
         </div>
     </div>
 </div>
-
-<script>
-{% for topic in topics %}
-    {% for article in articles[topic] %}
-        $("#{{ generate_id('button', article.source) }}").click(function() {
-            $("#articles").children().hide();
-            $("#{{ generate_id('div', article.source) }}").show();
-        });
-    {% endfor %}
-{% endfor %}
-</script>
 {% endblock %}

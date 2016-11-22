@@ -12,7 +12,7 @@ def render_template(template, context=None, template_folder='templates'):
         context = {}
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader(template_folder))
     environment.globals['load_article'] = load_article
-    environment.globals['generate_id'] = generate_id
+    environment.globals['generate_name'] = generate_name
     return environment.get_template(template).render(context)
 
 
@@ -46,14 +46,12 @@ def load_article(filepath):
     return html_text
 
 
-def generate_id(id_class, string_id):
+def generate_name(string_class):
     unsuitable_symbols = string.punctuation + ' '
     for symbol in unsuitable_symbols:
-        string_id = string_id.replace(symbol, '_')
-    return 'id_{}_{}'.format(id_class, string_id)
+        string_class = string_class.replace(symbol, '_')
+    return string_class
 
-
-# TODO: Move CSS and JS to separate files
 
 if __name__ == '__main__':
     data = read_config()
@@ -66,6 +64,5 @@ if __name__ == '__main__':
     print(articles)
     result = render_template('index.html', context)
     with open('test.html', 'w') as export_file:
-        #print(result)
         export_file.write(result)
         export_file.close()

@@ -1,0 +1,24 @@
+body {
+    overflow-x:hidden;
+}
+nav.navbar-custom {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+button.btn-index {
+    width: 100%;
+    padding: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    background-color: #F8F8F8;
+    border-color: #E7E7E7
+}
+button.btn-article {
+    border: none;
+    width: 100%;
+    padding: 5px;
+    padding-left: 35px;
+    text-align: left;
+}
